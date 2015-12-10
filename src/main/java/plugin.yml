@@ -1,0 +1,9 @@
+name: ColoredNames
+main: me.realized.colorednames.ColoredNames
+version: 1.4
+author: Realized
+description: A fun and cosmetic add-on to Essentials nickname system by Realized.
+
+commands:
+   color:
+      description: Change the color of your name!

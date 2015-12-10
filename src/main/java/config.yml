@@ -1,0 +1,44 @@
+# title length must be 32 or less, else it'll break.
+gui-title: '&cClick to change color!'
+
+# Available placeholder: %nickname%
+gui-items:
+  confirm:
+    name: '&a&lClick to confirm!'
+    lore:
+    - '&7Click to set'
+    - '&7your nickname'
+    - '&7to ''&r%nickname%&7''.'
+
+# Edit the messages here!
+no-permission: '&c[ColoredNames] You do not have permission to execute this command.'
+target-not-found: '&c[ColoredNames] That player is not online!'
+on-open-others: '&a[ColoredNames] Opened GUI for %player%.'
+
+# Add your own command alias here!
+# For example, '/colorname' will be redirected to '/color'.
+command-alias:
+- 'colorname'
+- 'colormyname'
+
+# Edit the color of the wool and the color code for the clicked character here.
+# Format: <wool meta>:<color code>
+# For example, when player clicks wool:0 (white wool), &f will be added to the clicked character.
+# You can also add multiple color codes! (Example: '1:&6&l' -> Adds a bold orange color to the character.)
+# Read more about the color codes here: http://minecraft.gamepedia.com/Formatting_codes
+colors:
+- '0:&f'
+- '1:&6'
+- '2:&d'
+- '3:&b'
+- '4:&e'
+- '5:&a'
+- '14:&4'
+- '6:&c'
+- '7:&8'
+- '8:&7'
+- '9:&3'
+- '10:&5'
+- '11:&9'
+- '13:&2'
+- '15:&0'
