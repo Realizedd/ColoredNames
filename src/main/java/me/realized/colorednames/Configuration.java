@@ -12,94 +12,85 @@ import java.util.List;
 
 public class Configuration {
 
-    private ColoredNames m;
-    private FileConfiguration c;
-    private String guiTitle = "&cChange name color!";
-    private String INVALID_TARGET = "&c[ColoredNames] That player is not online!";
-    private String ON_OPEN = "&a[ColoredNames] Opened GUI for %player%.";
-    private String NO_PERMISSION = "&c[ColoredNames] You do not have permission to execute this command!";
+    private final FileConfiguration base;
+
+    private String title = "&cChange name color!";
+    private String playerNotFound = "&c[Core] That player is not online!";
+    private String onOpen = "&a[Core] Opened GUI for %player%.";
+    private String noPermission = "&c[Core] You do not have permission to execute this command!";
     private String confirmName = "&a&lClick to confirm!";
     private List<String> confirmLore = Arrays.asList("&7Click to set", "&7your nickname", "&7to '&r%nickname%&7'.");
     private List<String> alias = new ArrayList<>();
     private List<String> colors = Arrays.asList("0:f", "1:6", "2:d", "3:b", "4:e", "5:a", "14:4", "6:c", "7:8", "8:7", "9:3", "10:5", "11:9", "13:2", "15:0");
 
-    public Configuration(ColoredNames m) {
-        this.m = m;
-        c = m.getConfig();
+    public Configuration(Core instance) {
+        this.base = instance.getConfig();
     }
 
     protected void loadOptions() {
-        if (c.isString("no-permission") && !c.getString("no-permission").isEmpty()) {
-            NO_PERMISSION = c.getString("no-permission");
-            m.info("Loaded no permission message: '" + NO_PERMISSION + "'");
+        if (base.isString("no-permission") && !base.getString("no-permission").isEmpty()) {
+            noPermission = base.getString("no-permission");
         }
 
-        if (c.isString("target-not-found") && !c.getString("target-not-found").isEmpty()) {
-            INVALID_TARGET = c.getString("target-not-found");
-            m.info("Loaded invalid target message: '" + INVALID_TARGET + "'");
+        if (base.isString("target-not-found") && !base.getString("target-not-found").isEmpty()) {
+            playerNotFound = base.getString("target-not-found");
         }
 
-        if (c.isString("on-open-others") && !c.getString("on-open-others").isEmpty()) {
-            ON_OPEN = c.getString("on-open-others");
-            m.info("Loaded on open others message: '" + ON_OPEN + "'");
+        if (base.isString("on-open-others") && !base.getString("on-open-others").isEmpty()) {
+            onOpen = base.getString("on-open-others");
         }
 
-        if (c.isString("gui-items.confirm.name") && !c.getString("gui-items.confirm.name").isEmpty()) {
-            confirmName = c.getString("gui-items.confirm.name");
-            m.info("Loaded confirm item's display name: '" + confirmName + "'");
+        if (base.isString("gui-items.confirinstance.name") && !base.getString("gui-items.confirinstance.name").isEmpty()) {
+            confirmName = base.getString("gui-items.confirinstance.name");
         }
 
-        if (c.isList("gui-items.confirm.lore") && !c.getStringList("gui-items.confirm.lore").isEmpty()) {
-            confirmLore = c.getStringList("gui-items.confirm.lore");
-            m.info("Loaded confirm item's lore: " + confirmLore.toString());
+        if (base.isList("gui-items.confirinstance.lore") && !base.getStringList("gui-items.confirinstance.lore").isEmpty()) {
+            confirmLore = base.getStringList("gui-items.confirinstance.lore");
         }
 
-        if (c.isString("gui-title") && c.getString("gui-title").length() <= 32) {
-            guiTitle = c.getString("gui-title");
-            m.info("Loaded GUI Title: '" + guiTitle + "'");
-        } else {
-            m.warn("Failed to load GUI Title from the config, using the default one for now: title length must be 32 or less");
+        if (base.isString("gui-title") && base.getString("gui-title").length() <= 32) {
+            title = base.getString("gui-title");
         }
 
-        if (c.isList("command-alias") && !c.getStringList("command-alias").isEmpty()) {
-            alias = c.getStringList("command-alias");
-            m.info("Loaded command alias: " + alias.toString());
+        if (base.isList("command-alias") && !base.getStringList("command-alias").isEmpty()) {
+            alias = base.getStringList("command-alias");
         }
 
-        if (c.isList("colors") && !c.getStringList("colors").isEmpty()) {
-            colors = c.getStringList("colors");
-            m.info("Loaded colors: " + colors.toString());
-        } else {
-            m.warn("Failed to load colors from the config, using the default one for now: list is either empty or invalid");
+        if (base.isList("colors") && !base.getStringList("colors").isEmpty()) {
+            colors = base.getStringList("colors");
         }
     }
 
-    protected String getTitle() {
-        return guiTitle;
+    public String getTitle() {
+        return title;
     }
 
-    protected List<String> getAlias() {
-        return alias;
+    public String getPlayerNotFoundMessage() {
+        return playerNotFound;
     }
 
-    protected String getNPMessage() {
-        return NO_PERMISSION;
+    public String getOnOpenMessage() {
+        return onOpen;
     }
 
-    protected String getITMessage() {
-        return INVALID_TARGET;
+    public String getNoPermissionMessage() {
+        return noPermission;
     }
 
-    protected String getOOMessage() {
-        return ON_OPEN;
-    }
-
-    protected String getConfirmName() {
+    public String getConfirmName() {
         return confirmName;
     }
 
-    protected List<String> getConfirmLore() {
+    public List<String> getConfirmLore() {
         return confirmLore;
+    }
+
+    public List<String> getAlias() {
+        return alias;
+    }
+
+    public List<String> getColors() {
+        return colors;
     }
 
     protected String get(short data) {

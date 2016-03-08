@@ -1,9 +1,7 @@
 package me.realized.colorednames;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,25 +15,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ColorListener implements Listener {
 
-    private Configuration config;
+    private final Core instance;
+    private final Configuration config;
 
-    public ColorListener(ColoredNames m) {
-        config = m.get();
-    }
-
-    private String color(String txt) {
-        return ChatColor.translateAlternateColorCodes('&', txt);
-    }
-
-    private void pm(CommandSender sender, String msg) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', msg));
+    public ColorListener(Core instance) {
+        this.instance = instance;
+        this.config = instance.getConfiguration();
     }
 
     private void updateStack(Inventory inventory, int slot, ClickType click, String name) {
         ItemStack item = inventory.getItem(slot);
         String displayName = item.getItemMeta().getDisplayName();
         short type = item.getDurability();
-        short next = 0;
+        short next = type;
 
         switch (click) {
             case LEFT:
@@ -44,14 +36,11 @@ public class ColorListener implements Listener {
             case RIGHT:
                 next = config.getNext(type);
                 break;
-            default:
-                next = type;
-                break;
         }
 
         ItemStack updated = new ItemStack(Material.WOOL, 1, next);
         ItemMeta meta = updated.getItemMeta();
-        meta.setDisplayName(color(config.get(next).split(":")[1] + displayName.substring(displayName.length() - 1)));
+        meta.setDisplayName(instance.color(config.get(next).split(":")[1] + displayName.substring(displayName.length() - 1)));
         updated.setItemMeta(meta);
         inventory.setItem(slot, updated);
         config.update(inventory.getItem(31), config.getNickname(inventory, name).toString());
@@ -73,7 +62,7 @@ public class ColorListener implements Listener {
             return;
         }
 
-        if (top.getTitle().equals(color(config.getTitle()))) {
+        if (top.getTitle().equals(instance.color(config.getTitle()))) {
             e.setCancelled(true);
 
             switch (item.getType()) {
@@ -96,7 +85,7 @@ public class ColorListener implements Listener {
         Player p = (Player) e.getPlayer();
         Inventory inv = e.getInventory();
 
-        if (!inv.getTitle().equals(color(config.getTitle()))) {
+        if (!inv.getTitle().equals(instance.color(config.getTitle()))) {
             return;
         }
 
