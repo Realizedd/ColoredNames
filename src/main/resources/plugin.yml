@@ -1,6 +1,6 @@
 name: ColoredNames
 main: me.realized.colorednames.Core
-version: 1.4.1
+version: 1.4.2
 author: Realized
 description: A fun and cosmetic add-on to Essentials nickname system by Realized.
 depend: [Essentials]
